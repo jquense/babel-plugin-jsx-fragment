@@ -1,6 +1,5 @@
 var React = require('react')
 
-
 class Component extends React.Component {
 
   render(){
@@ -9,7 +8,7 @@ class Component extends React.Component {
       <div>
         {
           true && <frag>
-            heeello
+            hello
             <span>john</span>
           </frag>
         }

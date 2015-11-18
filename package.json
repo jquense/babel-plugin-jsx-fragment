@@ -1,10 +1,10 @@
 {
   "name": "babel-plugin-jsx-fragment",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "better element arrays in jsx",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test.js",
     "webpack": "webpack --config webpack.config.js --watch"
   },
   "repository": {
@@ -22,14 +22,15 @@
     "url": "https://github.com/jquense/babel-plugin-jsx-fragment/issues"
   },
   "homepage": "https://github.com/jquense/babel-plugin-jsx-fragment#readme",
-  "dependencies": {
-    "babel-core": "^5.4.7"
+  "peerDependencies": {
+    "react-addons-create-fragment": ">=0.14.0"
   },
   "devDependencies": {
+    "babel-core": "^5.8.34",
     "babel-loader": "^5.1.4",
     "chai": "^3.0.0",
     "mocha": "^2.2.5",
-    "react": "^0.13.3",
+    "react": "^0.14.0",
     "webpack": "^1.9.10",
     "webpack-dev-server": "^1.9.0"
   }

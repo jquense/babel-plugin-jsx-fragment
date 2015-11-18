@@ -1,31 +1,32 @@
-var t  = require('babel-core').types
 
-function isFrag(node){
-  return t.isJSXIdentifier(node.name) && node.name.name === 'frag'
-}
 
 module.exports = function(babel){
+  var t = babel.types;
 
-  return new babel.Transformer('jsx-fragment', {
-    JSXElement: function(node, parent, scope, file){
-      var opening = node.openingElement;
+  function isFrag(node){
+    return t.isJSXIdentifier(node.name) && node.name.name === 'frag'
+  }
 
-      if ( isFrag(opening) ) {
-        if (opening.selfClosing) 
-          throw new Error('<frag> jsx elements cannot be self closing. The entire point of them is to contain children')
+  return new babel.Plugin('jsx-fragment', {
+    visitor: {
+      JSXElement: function(node, parent, scope, file){
+        var opening = node.openingElement;
 
-        var fragment = t.objectExpression(node.children.map(function(val, idx){
-          return t.property('init', t.literal('key_' + idx), val)
-        }))
+        if (isFrag(opening)) {
+          if (opening.selfClosing)
+            throw new Error('<frag> jsx elements cannot be self closing. The point of them is to contain children')
 
-        node = t.callExpression(
-            t.memberExpression(
-                file.addImport('react/lib/ReactFragment', 'ReactFragment')
-              , t.identifier('create'))
-          , [ fragment ])
+          var fragment = t.objectExpression(node.children.map(function(val, idx) {
+            return t.property('init', t.literal('key_' + idx), val)
+          }))
+
+          node = t.callExpression(
+              file.addImport('react-addons-create-fragment', 'ReactFragment')
+            , [ fragment ])
+        }
+
+        return node
       }
-
-      return node
     }
   })
 }
