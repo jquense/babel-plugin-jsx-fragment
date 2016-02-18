@@ -4,7 +4,7 @@ module.exports = function(babel){
   var t = babel.types;
 
   function isFrag(node){
-    return t.isJSXIdentifier(node.name) && node.name.name === 'frag'
+    return t.isJSXIdentifier(node.name) && (node.name.name === 'frag' || node.name.name === 'fragment')
   }
 
   return new babel.Plugin('jsx-fragment', {
