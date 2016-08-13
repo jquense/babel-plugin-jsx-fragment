@@ -14,7 +14,10 @@ describe('should detect fragments', function(){
 
 
 function transform(file){
-  return babel.transform(fs.readFileSync(__dirname + '/fixtures/' + file), { stage: 0, plugins: [ 
-    plugin 
-  ]})
+  return babel.transform(fs.readFileSync(__dirname + '/fixtures/' + file), {
+    presets: ['es2015', 'react'],
+    plugins: [
+      plugin
+    ]
+  })
 }

@@ -14,16 +14,15 @@ module.exports = {
   },
 
   babel:  {
-    stage: 0,
-    loose: ['all'],
+    presets: ['es2015', 'react'],
     plugins: [ plugin ]
-  } ,
+  },
 
   module: {
     loaders: [
-      { 
-        test: /\.jsx$|\.js$/, 
-        loader: 'babel-loader', 
+      {
+        test: /\.jsx$|\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/
       }
     ]
