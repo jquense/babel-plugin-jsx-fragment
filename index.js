@@ -22,7 +22,8 @@ module.exports = function(babel) {
 
         if (isFrag(opening, tagName)) {
           if (opening.selfClosing)
-            throw new Error('<frag> jsx elements cannot be self closing. The point of them is to contain children')
+            throw new Error(
+              '<' + tagName + '> jsx elements cannot be self closing. The point of them is to contain children')
 
 
           var fragments = t.ArrayExpression(
@@ -30,7 +31,7 @@ module.exports = function(babel) {
               var value = child;
 
               if (t.isJSXText(value)) {
-                if (idx == (node.children.length - 1)) {
+                if (value.value.trim() === '') {
                   return null;
                 }
                 value = t.stringLiteral(value.value.trim())

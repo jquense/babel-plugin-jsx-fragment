@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/jquense/babel-plugin-jsx-fragment#readme",
   "peerDependencies": {
-    "react-addons-create-fragment": ">=0.14.0"
+    "react": ">=0.14.0"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",

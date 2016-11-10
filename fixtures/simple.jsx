@@ -4,6 +4,8 @@ let foo = (
   <div>
     {
       true && <$frag>
+        {''}
+        gg
         {false}
         heeello
         <span/>
