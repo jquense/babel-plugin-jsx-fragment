@@ -4,9 +4,19 @@
 npm i -S babel-plugin-jsx-fragment
 ```
 
-To use include `jsx-fragment` in your plugins array in your `.babelrc` or config object. Works with React `0.13`+ and uses the newly added `createFragment` api.
+To use include `jsx-fragment` in your plugins array in your `.babelrc` or config object. Works with React `0.13`+ .
+By default the fragment tag name is `<frag>` but you can configure it to whatever you want with the `tagName` option.
 
-### The Problem 
+```json
+{
+  "plugins": [
+    ["jsx-fragment", { "tagName": "fragment" }]
+  ]
+}
+```
+
+
+### The Problem
 
 JSX gets ugly when using conditionals that return more than one jsx element
 

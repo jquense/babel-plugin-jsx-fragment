@@ -17,7 +17,7 @@ function transform(file){
   return babel.transform(fs.readFileSync(__dirname + '/fixtures/' + file), {
     presets: ['es2015', 'react'],
     plugins: [
-      plugin
+      [plugin, { tagName: '$frag' }]
     ]
   })
 }

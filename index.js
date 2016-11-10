@@ -1,40 +1,60 @@
 
-
-module.exports = function(babel){
+module.exports = function(babel) {
   var t = babel.types;
+  var template = babel.template;
 
-  function isFrag(node){
-    return t.isJSXIdentifier(node.name) && (node.name.name === 'frag' || node.name.name === 'fragment')
+  var buildMapper = template(`
+    CHILDREN.Children.map(FRAGMENT, function (child){
+      return child;
+    })
+  `);
+
+  function isFrag(node, tagName){
+    return t.isJSXIdentifier(node.name) && node.name.name === tagName
   }
 
   return {
     visitor: {
       JSXElement: function(path, state) {
         var node = path.node
+        var tagName = state.opts.tagName || 'frag';
         var opening = node.openingElement;
 
-        if (isFrag(opening)) {
+        if (isFrag(opening, tagName)) {
           if (opening.selfClosing)
             throw new Error('<frag> jsx elements cannot be self closing. The point of them is to contain children')
 
-          var fragment = t.ObjectExpression(
+
+          var fragments = t.ArrayExpression(
             node.children.map(function(child, idx) {
               var value = child;
 
-              if (t.isJSXText(value))
-                value = t.stringLiteral(value.value)
+              if (t.isJSXText(value)) {
+                if (idx == (node.children.length - 1)) {
+                  return null;
+                }
+                value = t.stringLiteral(value.value.trim())
+              }
 
               if (t.isJSXExpressionContainer(value))
                 value = value.expression;
 
-              return t.objectProperty(t.stringLiteral('key_' + idx), value)
+              return value
             })
+            .filter(f => f)
           )
 
-          node = t.CallExpression(
-              state.file.addImport('react-addons-create-fragment', 'ReactFragment')
-            , [ fragment ])
+          node = buildMapper({
+          	CHILDREN: state.file.addImport('react', 'default', 'fragment'),
+            FRAGMENT: fragments
+          })
 
+          // why would you do this?
+          if (t.isJSXElement(path.parent)) {
+            node = t.JSXExpressionContainer(node.expression)
+          }
+
+          console.log(state)
           path.replaceWith(node)
         }
       }

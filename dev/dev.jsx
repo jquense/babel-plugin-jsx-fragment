@@ -6,6 +6,8 @@ class Component extends React.Component {
 
     return (
       <div>
+        hello{'  '}
+        <span>john</span>
         {
           true && <frag>
             hello
