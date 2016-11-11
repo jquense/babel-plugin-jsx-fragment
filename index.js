@@ -55,7 +55,6 @@ module.exports = function(babel) {
             node = t.JSXExpressionContainer(node.expression)
           }
 
-          console.log(state)
           path.replaceWith(node)
         }
       }
