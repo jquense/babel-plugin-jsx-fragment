@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-jsx-fragment",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "better element arrays in jsx",
   "main": "index.js",
   "scripts": {
